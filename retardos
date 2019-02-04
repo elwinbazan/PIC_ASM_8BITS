@@ -1,0 +1,51 @@
+;*******************************************************************************
+;                  LIBRERIA DE RETARDOS < ASM >
+;*******************************************************************************    
+;*       Librería con  subrutinas de retardos:				    *
+;*	          __ RETARDOS 1 MS.				            *	
+;*	          __ RETARDO 100MS.					    *
+;*		  __ RETARDO 1SEG				            *
+;*      para microcontroladores pic de 8 bits con crystal  de 4Mhz	    *	
+;*           __Ciclo máquina tarda 4 x 1/4MHz = 1 µs.			    *
+;*									    *			    
+;*******************************************************************************
+;_______________________________________________________________________________
+    
+; DATOS 
+cblock
+    CONTADOR1
+    CONTADOR2
+    CONTADOR3
+endc
+; RETARDO
+;*******************************************************************************
+; LLAMADA       RETARDO_1SEG
+RETARDO_1SEG
+MOVLW .10
+MOVWF CONTADOR3
+LASO3
+
+CALL RETARDO_100MS
+DECFSZ CONTADOR3
+BRA LASO3
+RETURN
+
+; LLAMADA	RETARDO_100MS
+RETARDO_100MS
+MOVLW .100
+MOVWF CONTADOR2
+LASO2
+CALL RETARDO_1MS
+DECFSZ CONTADOR2
+BRA LASO2
+RETURN
+; LLAMADA      RETARDO_1MS   
+RETARDO_1MS
+MOVLW .250
+MOVWF CONTADOR1
+LASO1
+NOP
+DECFSZ CONTADOR1
+BRA LASO1
+RETURN 
+
